@@ -19,8 +19,8 @@ export default async function handler(req, res) {
       parts: [{ text: msg.content }]
     }));
 
-    // Lista de modelos válidos para tentar sequencialmente
-    const models = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro'];
+    // Lista com os identificadores oficiais e ativos da API Gemini v1beta
+    const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest'];
     let lastError = '';
 
     for (const model of models) {
