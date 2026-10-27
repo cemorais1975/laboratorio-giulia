@@ -48,4 +48,816 @@ header{display:flex;align-items:center;gap:14px;padding:12px 20px;background:var
 .marca .nome{display:block;font:500 1.5rem/1 "Cormorant Garamond",Georgia,serif}
 .marca .sub{display:block;margin-top:3px;color:var(--muted);font-size:.84rem}
 .menu{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
-.menu button{border-color:transparent;display:inline-flex
+.menu button{border-color:transparent;display:inline-flex;align-items:center;gap:6px}
+.menu button:hover{border-color:var(--line)}
+.menu button[aria-current="page"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.menu svg{width:16px;height:16px;flex:none}
+.cont{display:inline-block;min-width:1.4em;padding:0 .35em;border-radius:999px;background:var(--sun);color:var(--sun-ink);font-size:.75rem;font-weight:700;text-align:center}
+.marca{cursor:pointer;border:none;background:none;padding:0;text-align:left;display:flex;align-items:center;gap:12px;border-radius:8px}
+
+main{min-height:0;display:grid}
+main > section{min-height:0}
+[hidden]{display:none !important}
+
+/* ---------- Conversa ---------- */
+#conversa{display:grid;grid-template-rows:1fr auto;min-height:0}
+#msgs{overflow-y:auto;padding:26px 20px 10px}
+.trilho{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.vazio{text-align:center;color:var(--muted);padding:5vh 8px}
+.vazio .t{font:italic 500 2rem/1.15 "Cormorant Garamond",Georgia,serif;color:var(--ink);margin:0 0 8px}
+.sug{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.sug button{background:var(--surface)}
+.msg{max-width:84%;padding:9px 13px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.bot{background:var(--surface);border:1px solid var(--line);border-top-left-radius:4px}
+.msg.eu{background:var(--me);border-top-right-radius:4px;align-self:flex-end}
+.bloco{align-self:flex-start;max-width:84%;display:flex;flex-direction:column;gap:4px}
+.bloco .msg{max-width:100%}
+.acoes-msg{display:flex;gap:2px;flex-wrap:wrap}
+.acoes-msg .feito{color:var(--ok)}
+.corrigir{background:var(--soft);border:1px dashed var(--line);border-radius:12px;padding:10px;display:grid;gap:8px}
+.corrigir label{font-size:.85rem;color:var(--muted)}
+.corrigir textarea{width:100%;min-height:80px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface)}
+.corrigir .linha{display:flex;gap:8px;justify-content:flex-end}
+.aviso{align-self:center;color:var(--danger);font-size:.9rem;text-align:center}
+.pensando{display:inline-flex;gap:4px;padding:4px 0}
+.pensando i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:p 1s infinite}
+.pensando i:nth-child(2){animation-delay:.15s}.pensando i:nth-child(3){animation-delay:.3s}
+@keyframes p{0%,60%,100%{opacity:.25}30%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.pensando i{animation:none;opacity:.6}}
+#form{background:var(--surface);border-top:1px solid var(--line);padding:12px 20px}
+#form .trilho{flex-direction:row;align-items:flex-end}
+#entrada{flex:1;resize:none;max-height:140px;border:1px solid var(--line);border-radius:20px;padding:9px 14px;background:var(--bg)}
+.rodape-form{max-width:640px;margin:6px auto 0;display:flex;justify-content:space-between;color:var(--muted);font-size:.8rem}
+
+/* ---------- Aprendizado ---------- */
+.tela{overflow-y:auto;padding:26px 20px 0}
+.tela > .miolo{max-width:720px;margin:0 auto;padding-bottom:40px}
+[data-tela=personalidade] > .miolo{padding-bottom:0}
+.tela h2{font:600 1.6rem/1.15 "Cormorant Garamond",Georgia,serif;margin:0}
+.tela h3{font:600 1.2rem/1.2 "Cormorant Garamond",Georgia,serif;margin:28px 0 4px}
+.nota{color:var(--muted);font-size:.86rem;margin:4px 0 12px}
+.barra{height:8px;border-radius:99px;background:var(--soft);overflow:hidden;margin:14px 0 4px;border:1px solid var(--line)}
+.barra span{display:block;height:100%;background:var(--sun);transition:width .4s}
+.lacuna{border-top:1px solid var(--line);padding:10px 0}
+.lacuna:first-of-type{border-top:none}
+.lacuna summary{cursor:pointer;display:flex;align-items:center;gap:10px;list-style:none}
+.lacuna summary::-webkit-details-marker{display:none}
+.marca-l{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);flex:none}
+.lacuna.ok .marca-l{background:var(--ok);border-color:var(--ok)}
+.lacuna .resumo{color:var(--muted);font-size:.85rem;margin-left:28px}
+.lacuna form,.novo{display:grid;gap:8px;margin-top:10px}
+.lacuna textarea,.novo textarea,.novo select,#editor textarea{
+  width:100%;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg);resize:vertical
+}
+.lacuna textarea{min-height:64px}
+.novo textarea{min-height:76px}
+.linha{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.licao{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;background:var(--soft)}
+.licao.inativa{opacity:.55}
+.licao .tipo{font-size:.78rem;font-weight:700;color:var(--muted)}
+.licao p{margin:4px 0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.93rem}
+.licao .q{color:var(--muted)}
+.licao .linha{justify-content:flex-start;margin-top:4px}
+.filtros{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.filtros button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.mono{min-height:260px;font:13px/1.55 ui-monospace,Menlo,Consolas,monospace}
+.avancado{margin-top:10px;border-top:1px solid var(--line);padding-top:10px}
+.avancado summary{cursor:pointer;font-weight:600}
+.campos{display:grid;gap:16px;margin-top:12px}
+.campo{display:grid;gap:6px}
+.campo > label,.campo > .rot{font-weight:600;font-size:.95rem}
+.campo .dica{color:var(--muted);font-size:.84rem;margin:-2px 0 2px}
+.campo input,.campo textarea,.campo select,.avancado textarea,.ia textarea{
+  width:100%;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg);resize:vertical
+}
+.campo textarea{min-height:70px}
+.opcoes{display:flex;flex-wrap:wrap;gap:6px}
+.opcoes button[aria-pressed="true"]{background:var(--sun);color:var(--sun-ink);border-color:var(--sun);font-weight:700}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ia{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;margin-top:10px}
+.ia textarea{min-height:80px;background:var(--surface)}
+.ia .proposta{min-height:240px;font:13px/1.55 ui-monospace,Menlo,Consolas,monospace}
+.barra-salvar{position:sticky;bottom:0;margin-top:22px;padding:12px 0 calc(12px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.pendente{color:var(--ink);font-size:.86rem;margin-right:auto}
+.pendente::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--sun);margin-right:6px}
+pre.prompt{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;max-height:420px;overflow:auto}
+.status{font-size:.84rem;color:var(--muted);min-height:1.2em}
+.vazio-l{color:var(--muted);font-size:.9rem;padding:8px 0}
+#exportar textarea{width:100%;min-height:140px;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--bg)}
+
+@media (max-width:720px){
+  header{flex-wrap:wrap;gap:10px;padding:10px 14px}
+  .marca .sub{display:none}
+  .menu{margin-left:0;width:100%;flex-wrap:nowrap;gap:4px}
+  .menu button{flex:1 1 0;min-width:0;justify-content:center;padding:7px 6px;font-size:.84rem;white-space:nowrap}
+  .menu svg{display:none}
+  .duas{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header>
+  <button class="marca" type="button" data-ir="conversa" aria-label="Voltar para a conversa">
+    <svg class="sol" viewBox="0 0 40 40" aria-hidden="true">
+    <g fill="var(--sun)">
+      <circle cx="20" cy="20" r="7"/>
+      <ellipse id="pt" cx="20" cy="6" rx="3.2" ry="5.5"/>
+      <use href="#pt" transform="rotate(45 20 20)"/><use href="#pt" transform="rotate(90 20 20)"/>
+      <use href="#pt" transform="rotate(135 20 20)"/><use href="#pt" transform="rotate(180 20 20)"/>
+      <use href="#pt" transform="rotate(225 20 20)"/><use href="#pt" transform="rotate(270 20 20)"/>
+      <use href="#pt" transform="rotate(315 20 20)"/>
+    </g>
+    <circle cx="20" cy="20" r="4.6" fill="var(--ink)" opacity=".85"/>
+  </svg>
+    <span><span class="nome">Flávia Morais</span><span class="sub">Laboratório da assistente virtual</span></span>
+  </button>
+  <nav class="menu" aria-label="Menu">
+    <button type="button" data-ir="conversa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Conversa</button>
+    <button type="button" data-ir="aprendizado"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg>Aprendizado <span class="cont" id="contAba">0</span></button>
+    <button type="button" data-ir="personalidade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.4-9.3-9A5.2 5.2 0 0 1 12 6.6 5.2 5.2 0 0 1 21.3 12C19 16.6 12 21 12 21z"/></svg>Personalidade</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ================= CONVERSA ================= -->
+  <section id="conversa" data-tela="conversa" aria-label="Conversa de teste">
+    <div id="msgs"><div class="trilho" id="trilho"></div></div>
+    <form id="form">
+      <div class="trilho">
+        <textarea id="entrada" rows="1" placeholder="Escreva como se fosse uma cliente…" aria-label="Mensagem"></textarea>
+        <button class="prim" id="btnEnviar" type="submit">Enviar</button>
+      </div>
+      <div class="rodape-form">
+        <span id="statusIA">Enter envia, Shift+Enter quebra linha.</span>
+        <button type="button" class="link" id="nova">Nova conversa</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ================= APRENDIZADO ================= -->
+  <section class="tela" data-tela="aprendizado" aria-label="Aprendizado" hidden>
+   <div class="miolo">
+    <h2>Aprendizado</h2>
+    <p class="nota">O que ela sabe sobre o estúdio. Tudo o que você ensinar aqui fica salvo e vale a partir da próxima mensagem.</p>
+    <div class="status" id="statusDb"></div>
+
+    <h3>O que ela ainda não sabe</h3>
+    <p class="nota">Informações que não estão no site. Enquanto estiverem vazias, a assistente não inventa e encaminha para a Flávia.</p>
+    <div class="barra" aria-hidden="true"><span id="barra" style="width:0"></span></div>
+    <p class="nota" id="progresso"></p>
+    <div id="lacunas"></div>
+
+    <h3>Ensinar algo novo</h3>
+    <form class="novo" id="formNovo">
+      <select id="novoTipo" aria-label="Tipo de aprendizado">
+        <option value="fato">Fato (uma informação sobre o estúdio)</option>
+        <option value="regra">Regra (como ela deve se comportar)</option>
+      </select>
+      <textarea id="novoTexto" placeholder="Ex.: O estúdio tem estacionamento conveniado no prédio." aria-label="O que ela deve aprender"></textarea>
+      <div class="linha"><button class="prim" type="submit">Ensinar</button></div>
+    </form>
+
+    <h3>Aprendizados salvos</h3>
+    <p class="nota">Correções e boas respostas que você marcar na conversa aparecem aqui. Desative um item para comparar a resposta sem ele.</p>
+    <div class="filtros" id="filtros">
+      <button type="button" aria-pressed="true" data-f="todos">Todos</button>
+      <button type="button" aria-pressed="false" data-f="fato">Fatos</button>
+      <button type="button" aria-pressed="false" data-f="regra">Regras</button>
+      <button type="button" aria-pressed="false" data-f="correcao">Correções</button>
+      <button type="button" aria-pressed="false" data-f="exemplo">Boas respostas</button>
+    </div>
+    <div id="lista"></div>
+
+    <h3>Levar para o bot de verdade</h3>
+    <p class="nota">Gere o texto e cole no fim do arquivo <b>base_conhecimento.md</b> do projeto do WhatsApp.</p>
+    <div class="linha" style="justify-content:flex-start">
+      <button type="button" data-exportar="aprendizados">Gerar texto dos aprendizados</button>
+    </div>
+
+    <details class="avancado">
+      <summary>Base de conhecimento completa (avançado)</summary>
+      <p class="nota">O texto que veio do site. Edite com cuidado; os aprendizados acima já complementam este texto.</p>
+      <textarea id="edBase" class="mono" spellcheck="false" aria-label="Base de conhecimento"></textarea>
+      <div class="linha" style="margin-top:8px">
+        <button type="button" id="btnBaseOriginal">Restaurar original</button>
+        <button type="button" class="prim" id="btnSalvarBase">Salvar base</button>
+      </div>
+      <div class="status" id="statusBase"></div>
+    </details>
+   </div>
+  </section>
+
+  <!-- ================= PERSONALIDADE ================= -->
+  <section class="tela" data-tela="personalidade" aria-label="Personalidade" hidden>
+   <div class="miolo">
+    <h2>Personalidade</h2>
+    <p class="nota">Como ela fala, se apresenta e se comporta. Ajuste aqui, salve e volte para a conversa para sentir a diferença.</p>
+
+    <h3>Ajustes rápidos</h3>
+    <div class="campos">
+      <div class="duas">
+        <div class="campo">
+          <label for="pNome">Nome dela</label>
+          <p class="dica">Opcional. Sem nome, ela é “a assistente do estúdio”.</p>
+          <input id="pNome" data-campo="nome" placeholder="Ex.: Giulia" value="Giulia">
+        </div>
+        <div class="campo">
+          <label for="pApres">Como ela se apresenta</label>
+          <p class="dica">A primeira mensagem para quem chega.</p>
+          <input id="pApres" data-campo="apresentacao" placeholder="Ex.: Oie! Aqui é a Giulia, assistente da Flávia 🌻">
+        </div>
+      </div>
+
+      <div class="campo">
+        <span class="rot">Jeito de falar</span>
+        <div class="opcoes" data-opcao="tom">
+          <button type="button" data-v="">Padrão</button>
+          <button type="button" data-v="bem descontraída e próxima, como uma amiga">Bem descontraída</button>
+          <button type="button" data-v="descontraída, mas sempre educada e cuidadosa">Leve e educada</button>
+          <button type="button" data-v="mais formal e elegante, sem perder o carinho">Mais formal</button>
+        </div>
+      </div>
+      <div class="duas">
+        <div class="campo">
+          <span class="rot">Emojis</span>
+          <div class="opcoes" data-opcao="emojis">
+            <button type="button" data-v="">Padrão</button>
+            <button type="button" data-v="não usa emojis">Nenhum</button>
+            <button type="button" data-v="no máximo um emoji por mensagem, e nem sempre">Poucos</button>
+            <button type="button" data-v="usa emojis com naturalidade, até três por mensagem">À vontade</button>
+          </div>
+        </div>
+        <div class="campo">
+          <span class="rot">Tamanho das mensagens</span>
+          <div class="opcoes" data-opcao="tamanho">
+            <button type="button" data-v="">Padrão</button>
+            <button type="button" data-v="bem curtas, uma ou duas frases">Bem curtas</button>
+            <button type="button" data-v="curtas, até quatro frases">Curtas</button>
+            <button type="button" data-v="pode explicar com mais detalhes quando a cliente pedir">Mais explicativas</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="pExpr">Expressões que ela usa</label>
+        <p class="dica">Palavras e frases que soam como a Flávia.</p>
+        <textarea id="pExpr" data-campo="expressoes" placeholder="Ex.: “Oie!”, “que fase linda”, “Já guardou sua felicidade hoje?”"></textarea>
+      </div>
+      <div class="campo">
+        <label for="pNunca">O que ela nunca deve dizer ou fazer</label>
+        <textarea id="pNunca" data-campo="nunca" placeholder="Ex.: nunca oferecer desconto; nunca falar mal de outros fotógrafos."></textarea>
+      </div>
+      <div class="campo">
+        <label for="pMais">Mais sobre a personalidade dela</label>
+        <p class="dica">Escreva livremente: o jeito de acolher, o que valoriza, como lida com ansiedade, como encaminha para a Flávia.</p>
+        <textarea id="pMais" data-campo="mais" style="min-height:120px" placeholder="Ex.: Ela é como uma amiga que já foi mãe e entende o cansaço do puerpério. Antes de falar de serviços, pergunta como a cliente está."></textarea>
+      </div>
+    </div>
+
+    <h3>Escrever com ajuda da IA</h3>
+    <p class="nota">Descreva com suas palavras o que quer mudar. A IA reescreve o texto completo da personalidade e você decide se usa.</p>
+    <div class="ia">
+      <textarea id="iaPedido" aria-label="O que você quer mudar" placeholder="Ex.: Quero que ela pareça mais acolhedora com mães de primeira viagem e que sempre pergunte o nome do bebê."></textarea>
+      <div class="linha"><button type="button" class="prim" id="btnIA">Reescrever personalidade</button></div>
+      <div id="iaResultado" hidden>
+        <p class="nota" style="margin:0 0 6px">Proposta da IA. Você pode editar antes de usar.</p>
+        <textarea id="iaProposta" class="proposta" spellcheck="false" aria-label="Proposta de personalidade"></textarea>
+        <div class="linha" style="margin-top:8px">
+          <button type="button" id="btnIADescartar">Descartar</button>
+          <button type="button" class="prim" id="btnIAUsar">Usar esta versão</button>
+        </div>
+      </div>
+      <div class="status" id="statusIA2"></div>
+    </div>
+
+    <details class="avancado">
+      <summary>Texto completo da personalidade</summary>
+      <p class="nota">A base de tudo. Os ajustes rápidos acima são somados a este texto.</p>
+      <textarea id="edPers" class="mono" spellcheck="false" aria-label="Texto da personalidade"></textarea>
+    </details>
+    <details class="avancado" id="detPrompt">
+      <summary>Ver tudo o que ela recebe</summary>
+      <p class="nota">Personalidade, ajustes, base de conhecimento e aprendizados, na ordem em que a assistente lê.</p>
+      <pre class="prompt" id="prePrompt"></pre>
+    </details>
+    <div class="linha" style="justify-content:flex-start;margin-top:14px">
+      <button type="button" data-exportar="personalidade">Gerar texto final da personalidade</button>
+      <button type="button" id="btnPersOriginal">Restaurar personalidade original</button>
+    </div>
+
+    <div class="barra-salvar">
+      <span class="pendente" id="pendente" hidden>Alterações não salvas</span>
+      <span class="status" id="statusPers"></span>
+      <button type="button" id="btnSalvarPers">Salvar</button>
+      <button type="button" class="prim" id="btnSalvarTestar">Salvar e testar na conversa</button>
+    </div>
+   </div>
+  </section>
+</main>
+
+<dialog id="dlgExport" style="border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);padding:20px;width:min(640px,92vw)">
+  <strong id="expTitulo"></strong>
+  <p class="nota" id="expNota"></p>
+  <textarea id="txtExport" readonly class="mono" style="width:100%;min-height:260px;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--bg)" aria-label="Texto gerado"></textarea>
+  <div class="linha" style="margin-top:10px">
+    <button type="button" id="btnBaixar">Baixar .md</button>
+    <button type="button" id="btnCopiar">Copiar</button>
+    <button type="button" class="prim" id="btnFecharExp">Fechar</button>
+  </div>
+</dialog>
+
+<script>
+const PADRAO = {
+  personalidade: `# Quem você é\nVocê é a **Giulia**, assistente virtual do **Flávia Morais Estúdio de Fotografia**, estúdio na zona sul de São Paulo especializado em ensaios de luxo para gestantes e bebês até 1 ano. Você atende pelo WhatsApp quem se interessa pelos ensaios.\n\nVocê é a Giulia, uma assistente, não a Flávia. Apresente-se pelo nome. Ao se apresentar, diga que é a Giulia, assistente da Flávia; não precisa citar o nome do estúdio. Se perguntarem, diga com naturalidade que é a assistente virtual do estúdio e que a Flávia acompanha as conversas e entra quando precisa.\n\n# Seu jeito\n- Carinhosa, acolhedora e alegre, com o mesmo espírito da Flávia: sol, mar, girassóis, positividade e amor pelas famílias.\n- Especialista: você entende de fotografia de gestantes e bebês e passa segurança. Explica com calma, sem jargão.\n- Gestantes e mães de recém-nascidos costumam estar ansiosas, cansadas ou emocionadas. Acolha antes de informar. Pergunte o nome, a semana da gestação ou a idade do bebê, e use essas informações na conversa.\n- Celebre os momentos ("que fase linda!", "parabéns pela chegada!") sem exagerar.\n- Pode usar a frase do estúdio "Já guardou sua felicidade hoje?" de vez em quando, nunca em toda mensagem.\n\n# Como escrever no WhatsApp\n- Mensagens curtas, de 1 a 4 frases. Uma ideia por vez.\n- Português do Brasil, informal e educado. Trate por "você".\n- No máximo 1 ou 2 emojis por mensagem, e só quando combinar (🌻 ☀️ 🤍 👶 🤰).\n- Sem títulos nem listas longas. Para destacar, use *negrito do WhatsApp* com um asterisco.\n- Termine com uma pergunta leve que ajude a conversa a avançar, quando fizer sentido.\n\n# O que você faz\n- Explica os ensaios, como funcionam e qual combina com o momento da pessoa.\n- Orienta sobre o melhor período para cada ensaio, usando a base de conhecimento.\n- Ajuda a pessoa a decidir e conduz para o agendamento com a Flávia.\n- Recolhe, de forma natural e sem parecer formulário: nome, ensaio de interesse, semana de gestação ou data prevista do parto (ou idade do bebê), e preferência de data.\n\n# Regras importantes\n- Use SOMENTE as informações da base de conhecimento. Nunca invente preço, pacote, duração, quantidade de fotos, prazo, disponibilidade de agenda ou promoção.\n- Se algo estiver marcado como [CONFIRMAR] ou não estiver na base, diga com carinho que a Flávia passa esse detalhe pessoalmente e ofereça encaminhar.\n- Quando a pessoa quiser valores, fechar data ou um orçamento personalizado, recolha os dados acima e diga que a Flávia vai continuar o atendimento pessoalmente.\n- Saúde da gestante ou do bebê: você não dá orientação médica. Se surgir dúvida de saúde, sugira com delicadeza conversar com o médico ou pediatra.\n- Assuntos fora do estúdio: responda brevemente e com simpatia e traga a conversa de volta.\n- Reclamação ou cliente chateada: acolha, peça desculpas pelo transtorno e encaminhe para a Flávia, sem discutir.\n`,
+  base: `# Base de conhecimento — Flávia Morais Estúdio de Fotografia\n\n> Fonte: site www.flamorais.com (lido em outubro/2026).\n> Itens marcados com [CONFIRMAR] não estão no site: a Flávia precisa preencher ou validar.\n> Enquanto estiverem marcados, o bot NÃO afirma nada sobre eles.\n\n## Quem é a Flávia\n- Flávia Morais, fotógrafa. Esposa e mãe.\n- Ama o sol, o mar e girassóis. Busca transmitir alegria, positividade e amor.\n- A fotografia chegou num momento de transformação da vida dela: encontrou a felicidade ao começar a fotografar.\n- Numa foto de família, ela procura o amor, a conexão, a cumplicidade e a felicidade do momento.\n- Quer que as fotos sejam um documento importante para quem a contrata: no futuro, um elo direto com o passado, capaz de matar a saudade e trazer de volta boas lembranças.\n- Frase-assinatura: "Já guardou sua felicidade hoje?"\n\n## O estúdio\n- Estúdio profissional especializado em ensaios de luxo para gestantes e bebês até 1 ano.\n- O "luxo" significa personalização, requinte, atendimento diferenciado e acompanhamento durante todo o ensaio por uma equipe especializada.\n- Prioriza segurança e conforto (especialmente para recém-nascidos).\n- Endereço: Av. das Nações Unidas, 18.801, Office Novamerica, Jardim Dom Bosco, zona sul de São Paulo/SP.\n\n## Ensaios oferecidos (portfólio do site)\n1. **Gestantes** — ensaio em estúdio para grávidas.\n2. **Recém-nascidos / Newborn** — ensaio do bebê nos primeiros dias de vida.\n3. **Acompanhamento "Meu Primeiro Aninho"** — sessões ao longo do primeiro ano do bebê (o portfólio mostra, por exemplo, ensaios de 3 e 9 meses).\n4. **Acompanhamento de Famílias** — registros da família ao longo do tempo.\n5. **Smash the Cake** — ensaio de comemoração em que o bebê "destrói" o bolo, geralmente no primeiro aniversário.\n\nTambém citados no site, sem detalhes: mini ensaio / mini sessão, Fresh 48 (fotos nas primeiras 48h, na maternidade), ensaio lifestyle. [CONFIRMAR se são oferecidos hoje]\n\n## Detalhes dos serviços [CONFIRMAR — preencher com a Flávia]\n- Valores e pacotes de cada ensaio:\n- Duração de cada ensaio:\n- Quantidade de fotos editadas entregues:\n- Prazo e forma de entrega (galeria online, pen drive, álbum impresso):\n- Figurinos e acessórios disponíveis no estúdio (vestidos de gestante, cenários, props de newborn):\n- Inclui maquiagem/cabelo?\n- Familiares e irmãos podem participar? Pets?\n- Faz ensaios externos ou em casa? Atende maternidade?\n- Formas de pagamento, sinal para reservar a data, política de remarcação:\n- Horários de atendimento do estúdio:\n- Pacotes combinados (ex.: gestante + newborn + acompanhamento):\n\n## Contato e agendamento\n- WhatsApp/telefone: (11) 95031-9218\n- E-mail: contato@flamorais.com\n- Orçamento: pelo WhatsApp ou pela página de contato do site.\n- A Flávia convida para "um café" para conhecer o estúdio. [CONFIRMAR se faz visita/reunião antes do ensaio]\n- Redes: facebook.com/flafotografa e Instagram [CONFIRMAR o @ exato]\n\n## Orientações gerais da área [CONFIRMAR — a Flávia ajusta ao jeito dela]\nUse como conhecimento de especialista, sempre dizendo que a Flávia confirma os detalhes:\n- **Gestante:** o período mais comum para o ensaio é entre a 28ª e a 34ª semana, quando a barriga já está bonita e a gestante ainda se sente disposta. Gestação de gêmeos ou de risco costuma antecipar.\n- **Newborn:** geralmente nos primeiros 5 a 15 dias de vida, quando o bebê dorme mais profundamente e aceita melhor as poses enroladinhas. Vale reservar a data ainda na gestação e ajustar quando o bebê nascer.\n- **Segurança no newborn:** poses sempre com apoio e sem riscos; o bem-estar do bebê vem antes de qualquer foto; pausas para mamar e trocar fazem parte do ensaio; o estúdio fica aquecido.\n- **Acompanhamento do 1º ano:** marcos comuns são por volta de 3 meses (sustenta a cabeça, sorrisos), 6 meses (senta), 9 meses (engatinha, fica em pé) e 12 meses.\n- **Smash the cake:** costuma ser perto do 1º aniversário; roupinha leve, troca de roupa e banho fazem parte da diversão.\n`
+};
+
+const LACUNAS = [
+  {k:"precos", t:"Valores e pacotes", ex:"Ex.: Gestante a partir de R$ ..., inclui ... fotos editadas."},
+  {k:"duracao", t:"Duração de cada ensaio", ex:"Ex.: Gestante cerca de 2h; newborn de 3 a 4h, com pausas para mamar."},
+  {k:"fotos", t:"Quantidade de fotos entregues", ex:""},
+  {k:"entrega", t:"Prazo e forma de entrega", ex:"Ex.: galeria online em até 20 dias; álbum impresso opcional."},
+  {k:"figurino", t:"Figurinos e acessórios do estúdio", ex:""},
+  {k:"make", t:"Maquiagem e cabelo", ex:""},
+  {k:"participantes", t:"Família, irmãos e pets no ensaio", ex:""},
+  {k:"local", t:"Ensaio externo, em casa ou na maternidade", ex:""},
+  {k:"extras", t:"Mini ensaio, Fresh 48 e lifestyle", ex:"Oferece hoje? Como funcionam?"},
+  {k:"pagamento", t:"Pagamento, sinal e remarcação", ex:""},
+  {k:"horarios", t:"Dias e horários de atendimento", ex:""},
+  {k:"visita", t:"Visita ou café antes do ensaio", ex:""},
+  {k:"instagram", t:"Instagram do estúdio", ex:"Ex.: @flaviamoraisfotografasp"}
+];
+const NOMES_TIPO = {fato:"Fato", regra:"Regra", correcao:"Correção", exemplo:"Boa resposta"};
+const SUGESTOES = [
+  "oi",
+  "Estou de 30 semanas, ainda dá tempo de fazer o ensaio?",
+  "Quanto custa o ensaio newborn?",
+  "Meu bebê nasceu ontem! 💛",
+  "Vocês fotografam casamento?",
+  "Meu bebê está com cólica, o que eu faço?"
+];
+const TELAS = ["conversa","aprendizado","personalidade"];
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const el = (tag, attrs={}, ...filhos) => {
+  const n = document.createElement(tag);
+  for (const [a,v] of Object.entries(attrs)){
+    if (a === "class") n.className = v;
+    else if (a.startsWith("on")) n.addEventListener(a.slice(2), v);
+    else if (v !== false && v != null) n.setAttribute(a, v === true ? "" : v);
+  }
+  for (const f of filhos.flat()) if (f != null) n.append(f);
+  return n;
+};
+
+let licoes = [];
+let config = {personalidade:PADRAO.personalidade, base:PADRAO.base, ajustes:{nome:"Giulia"}};
+let turnos = [];
+let filtro = "todos";
+let controle = null, controleIA = null;
+let persSuja = false;
+
+/* Persistência Local Storage Fallback */
+function carregarLocalStorage(){
+  try {
+    const l = localStorage.getItem('giulia_licoes');
+    if (l) licoes = JSON.parse(l);
+    const c = localStorage.getItem('giulia_config');
+    if (c) config = JSON.parse(c);
+  } catch(e) {}
+}
+function salvarLocalStorage(){
+  try {
+    localStorage.setItem('giulia_licoes', JSON.stringify(licoes));
+    localStorage.setItem('giulia_config', JSON.stringify(config));
+  } catch(e) {}
+}
+
+carregarLocalStorage();
+
+/* Navegação */
+function irPara(tela, {semHash=false} = {}){
+  if (!TELAS.includes(tela)) tela = "conversa";
+  $$("main > section").forEach(s => s.hidden = s.dataset.tela !== tela);
+  $$(".menu button").forEach(b => b.dataset.ir === tela ? b.setAttribute("aria-current","page") : b.removeAttribute("aria-current"));
+  if (tela === "personalidade") atualizarPreviaPrompt();
+  if (tela === "conversa") setTimeout(() => entrada.focus(), 0);
+  if (!semHash && location.hash.slice(1) !== tela){ try{ history.replaceState(null, "", "#" + tela); }catch{} }
+}
+$$("[data-ir]").forEach(b => b.addEventListener("click", () => irPara(b.dataset.ir)));
+window.addEventListener("hashchange", () => irPara(location.hash.slice(1), {semHash:true}));
+
+/* Montagem do Prompt */
+function rotulo(k){ return (LACUNAS.find(x => x.k === k) || {t:k}).t; }
+function blocoAjustes(a = config.ajustes || {}){
+  const L = [];
+  if (a.nome) L.push(`- Seu nome é ${a.nome}. Apresente-se assim, deixando claro que é a assistente virtual do estúdio.`);
+  if (a.apresentacao) L.push(`- Ao cumprimentar alguém pela primeira vez, use algo no espírito de: “${a.apresentacao}”`);
+  if (a.tom) L.push(`- Jeito de falar: ${a.tom}.`);
+  if (a.emojis) L.push(`- Emojis: ${a.emojis}.`);
+  if (a.tamanho) L.push(`- Mensagens: ${a.tamanho}.`);
+  if (a.expressoes) L.push(`- Expressões que você usa com naturalidade (sem repetir sempre): ${a.expressoes}`);
+  if (a.nunca) L.push(`- Nunca: ${a.nunca}`);
+  if (a.mais) L.push(`- Mais sobre você: ${a.mais}`);
+  return L.length ? "# AJUSTES DE PERSONALIDADE (definidos pelo estúdio, têm prioridade sobre o texto acima)\n" + L.join("\n") + "\n" : "";
+}
+function blocoAprendizados(){
+  const ativas = licoes.filter(l => l.ativo !== false);
+  if (!ativas.length) return "";
+  const por = t => ativas.filter(l => l.tipo === t);
+  let s = "# APRENDIZADOS ENSINADOS PELO ESTÚDIO\nTêm prioridade sobre a base de conhecimento. Um fato aqui resolve o item [CONFIRMAR] correspondente.\n";
+  if (por("fato").length) s += "\n## Fatos\n" + por("fato").map(l => "- " + (l.campo ? rotulo(l.campo) + ": " : "") + l.texto).join("\n") + "\n";
+  if (por("regra").length) s += "\n## Regras de comportamento\n" + por("regra").map(l => "- " + l.texto).join("\n") + "\n";
+  if (por("correcao").length) s += "\n## Correções (quando a cliente disser algo parecido, responda neste espírito, adaptando ao contexto)\n" +
+    por("correcao").map(l => `- Cliente: “${l.pergunta}”\n  Resposta ideal: “${l.resposta}”`).join("\n") + "\n";
+  if (por("exemplo").length) s += "\n## Respostas aprovadas (bons exemplos do tom certo)\n" +
+    por("exemplo").map(l => `- Cliente: “${l.pergunta}”\n  Assistente: “${l.resposta}”`).join("\n") + "\n";
+  return s;
+}
+function personalidadeFinal(pers = config.personalidade, aj = config.ajustes){
+  const b = blocoAjustes(aj);
+  return pers.trim() + (b ? "\n\n" + b : "");
+}
+function instrucoes(){
+  return "Você vai interpretar a assistente virtual de atendimento descrita abaixo, numa conversa de WhatsApp. " +
+    "Responda sempre só com a mensagem que ela mandaria à cliente, sem comentários, sem explicar o que está fazendo.\n\n" +
+    personalidadeFinal() + "\n\n---\n\n# BASE DE CONHECIMENTO\n\n" + config.base + "\n\n" + blocoAprendizados() +
+    "\n---\nA conversa com a cliente começa a seguir.";
+}
+
+/* Chamadas para o backend na Vercel */
+async function chamarGeminiServerless(messages, signal) {
+  const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages }),
+    signal
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || 'Erro de comunicação');
+  }
+  return data.text;
+}
+
+/* Conversa */
+const trilho = $("#trilho"), msgsBox = $("#msgs"), entrada = $("#entrada");
+function rolar(){ msgsBox.scrollTop = msgsBox.scrollHeight; }
+function esc(t){ return t ? t.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])) : ""; }
+function fmt(t){ return esc(t).replace(/\*([^*\n]+)\*/g,"<b>$1</b>").replace(/(^|\s)_([^_\n]+)_(?=\s|$)/g,"$1<i>$2</i>"); }
+
+function telaVazia(){
+  trilho.replaceChildren(el("div",{class:"vazio"},
+    el("p",{class:"t"},"Já guardou sua felicidade hoje?"),
+    el("p",{},"Converse como se fosse uma cliente. Em cada resposta você pode marcar o que ficou bom ou ensinar o jeito certo."),
+    el("div",{class:"sug"}, SUGESTOES.map(s => el("button",{type:"button", onclick:()=>enviar(s)}, s)))
+  ));
+}
+function bolhaCliente(texto){
+  trilho.querySelector(".vazio")?.remove();
+  const b = el("div",{class:"msg eu"}); b.innerHTML = fmt(texto);
+  trilho.append(b); rolar();
+}
+function blocoBot(){
+  const msg = el("div",{class:"msg bot"});
+  msg.innerHTML = '<span class="pensando" aria-label="digitando"><i></i><i></i><i></i></span>';
+  const acoes = el("div",{class:"acoes-msg", hidden:true});
+  const bloco = el("div",{class:"bloco"}, msg, acoes);
+  trilho.append(bloco); rolar();
+  return {bloco, msg, acoes};
+}
+function montarAcoes(b, pergunta, resposta){
+  const bom = el("button",{type:"button", class:"link"},"👍 Boa resposta");
+  const corr = el("button",{type:"button", class:"link"},"✏️ Ensinar o jeito certo");
+  bom.onclick = async () => {
+    bom.disabled = true;
+    const ok = await salvarLicao({tipo:"exemplo", pergunta, resposta});
+    bom.textContent = ok ? "✓ Guardada como boa resposta" : "Erro ao salvar";
+    if (ok) bom.classList.add("feito");
+  };
+  corr.onclick = () => {
+    if (b.bloco.querySelector(".corrigir")) return;
+    const ta = el("textarea",{"aria-label":"Resposta ideal"}); ta.value = resposta;
+    const caixa = el("div",{class:"corrigir"},
+      el("label",{},"Como ela deveria ter respondido? Escreva do jeito que a Flávia gostaria."),
+      ta,
+      el("div",{class:"linha"},
+        el("button",{type:"button", onclick:()=>caixa.remove()},"Cancelar"),
+        el("button",{type:"button", class:"prim", onclick: async (e) => {
+          const t = ta.value.trim(); if (!t) return;
+          e.target.disabled = true;
+          const ok = await salvarLicao({tipo:"correcao", pergunta, resposta:t});
+          caixa.replaceChildren(el("span",{class:ok?"":"aviso"}, ok ? "✓ Aprendido. Vale a partir da próxima mensagem." : "Erro ao salvar."));
+        }},"Ensinar")
+      )
+    );
+    b.bloco.append(caixa); ta.focus(); rolar();
+  };
+  b.acoes.replaceChildren(bom, corr); b.acoes.hidden = false;
+}
+
+async function enviar(texto){
+  texto = (texto ?? entrada.value).trim();
+  if (!texto || controle) return;
+  
+  entrada.value = ""; altura();
+  bolhaCliente(texto);
+  turnos.push({role:"user", content:texto});
+  const b = blocoBot();
+  controle = new AbortController();
+  $("#btnEnviar").textContent = "Parar";
+  
+  try {
+    const historico = turnos.slice(-30);
+    while (historico[0]?.role !== "user") historico.shift();
+    
+    const promptCompleto = [{role:"user", content:instrucoes()}, ...historico];
+    const text = await chamarGeminiServerless(promptCompleto, controle.signal);
+    
+    turnos.push({role:"assistant", content:text});
+    b.msg.innerHTML = fmt(text);
+    montarAcoes(b, texto, text);
+  } catch(e) {
+    b.bloco.remove();
+    turnos.pop();
+    if (e.name !== 'AbortError') {
+      aviso(e.message || "Erro de resposta da assistente. Verifique a configuração na Vercel.");
+    }
+  } finally {
+    controle = null;
+    $("#btnEnviar").textContent = "Enviar";
+    rolar();
+    entrada.focus();
+  }
+}
+
+function aviso(t){ trilho.append(el("div",{class:"aviso"},t)); rolar(); }
+function altura(){ entrada.style.height = "auto"; entrada.style.height = Math.min(entrada.scrollHeight,140) + "px"; }
+function novaConversa(){ controle?.abort(); turnos = []; telaVazia(); }
+
+entrada.addEventListener("input", altura);
+entrada.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey){ e.preventDefault(); enviar(); } });
+$("#form").addEventListener("submit", e => { e.preventDefault(); if (controle) controle.abort(); else enviar(); });
+$("#nova").onclick = () => { novaConversa(); entrada.focus(); };
+
+/* Aprendizados */
+async function salvarLicao(obj){
+  const reg = {id: "lic-" + Date.now() + Math.random().toString(36).substr(2,4), ...obj, ativo:true, criadoEm:new Date().toISOString()};
+  licoes.push(reg);
+  salvarLocalStorage();
+  renderAprendizado();
+  return true;
+}
+async function atualizarLicao(id, campos){
+  const idx = licoes.findIndex(l => l.id === id);
+  if (idx !== -1) {
+    licoes[idx] = {...licoes[idx], ...campos};
+    salvarLocalStorage();
+    renderAprendizado();
+  }
+}
+async function apagarLicao(id){
+  licoes = licoes.filter(l => l.id !== id);
+  salvarLocalStorage();
+  renderAprendizado();
+}
+
+function renderAprendizado(){
+  const ativas = licoes.filter(l => l.ativo !== false);
+  $("#contAba").textContent = ativas.length;
+  const feitas = new Set(ativas.filter(l => l.tipo === "fato" && l.campo).map(l => l.campo));
+  $("#barra").style.width = Math.round(feitas.size / LACUNAS.length * 100) + "%";
+  $("#progresso").textContent = `${feitas.size} de ${LACUNAS.length} preenchidas`;
+  
+  const abertas = new Set($$("#lacunas details[open]").map(d => d.dataset.k));
+  $("#lacunas").replaceChildren(...LACUNAS.map(L => {
+    const atual = ativas.filter(l => l.tipo === "fato" && l.campo === L.k).at(-1);
+    const ta = el("textarea",{placeholder:L.ex || "Escreva a informação…", "aria-label":L.t});
+    if (atual) ta.value = atual.texto;
+    const form = el("form",{onsubmit: async e => {
+      e.preventDefault();
+      const t = ta.value.trim(); if (!t) return;
+      if (atual) await atualizarLicao(atual.id, {texto:t});
+      else await salvarLicao({tipo:"fato", campo:L.k, texto:t});
+    }}, ta, el("div",{class:"linha"}, el("button",{class:"prim", type:"submit"}, atual ? "Atualizar" : "Ensinar")));
+    return el("details",{class:"lacuna" + (atual ? " ok" : ""), "data-k":L.k, open:abertas.has(L.k)},
+      el("summary",{}, el("span",{class:"marca-l"}), L.t),
+      atual ? el("div",{class:"resumo"}, atual.texto.length > 90 ? atual.texto.slice(0,90) + "…" : atual.texto) : null,
+      form);
+  }));
+
+  const lista = licoes.filter(l => filtro === "todos" || l.tipo === filtro).slice().reverse();
+  if (!lista.length){
+    $("#lista").replaceChildren(el("p",{class:"vazio-l"}, filtro === "todos"
+      ? "Nada ensinado ainda. Converse e use “Ensinar o jeito certo” nas respostas."
+      : "Nenhum aprendizado deste tipo ainda."));
+  } else {
+    $("#lista").replaceChildren(...lista.map(l => {
+      const btnApagar = el("button",{type:"button", class:"link"}, "Apagar");
+      let numCliques = 0;
+      btnApagar.onclick = () => {
+        numCliques++;
+        if (numCliques === 1) {
+          btnApagar.textContent = "Confirmar apagar?";
+          btnApagar.style.color = "var(--danger)";
+          setTimeout(() => { numCliques = 0; btnApagar.textContent = "Apagar"; btnApagar.style.color = ""; }, 3000);
+        } else {
+          apagarLicao(l.id);
+        }
+      };
+
+      return el("div",{class:"licao" + (l.ativo === false ? " inativa" : "")},
+        el("div",{class:"tipo"}, NOMES_TIPO[l.tipo] + (l.campo ? " · " + rotulo(l.campo) : "")),
+        l.pergunta ? el("p",{class:"q"}, "Cliente: “" + l.pergunta + "”") : null,
+        el("p",{}, l.resposta ?? l.texto),
+        el("div",{class:"linha"},
+          el("button",{type:"button", class:"link", onclick:()=>atualizarLicao(l.id,{ativo:l.ativo === false})}, l.ativo === false ? "Ativar" : "Desativar"),
+          btnApagar
+        )
+      );
+    }));
+  }
+  if (!$("[data-tela=personalidade]").hidden) atualizarPreviaPrompt();
+}
+
+$$("#filtros button").forEach(b => b.onclick = () => {
+  filtro = b.dataset.f;
+  $$("#filtros button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  renderAprendizado();
+});
+
+$("#formNovo").addEventListener("submit", async e => {
+  e.preventDefault();
+  const t = $("#novoTexto").value.trim(); if (!t) return;
+  if (await salvarLicao({tipo:$("#novoTipo").value, texto:t})) $("#novoTexto").value = "";
+});
+
+/* Personalidade */
+function lerFormAjustes(){
+  const a = {};
+  $$("[data-campo]").forEach(i => { const v = i.value.trim(); if (v) a[i.dataset.campo] = v; });
+  $$("[data-opcao]").forEach(g => { const b = g.querySelector('[aria-pressed="true"]'); if (b?.dataset.v) a[g.dataset.opcao] = b.dataset.v; });
+  return a;
+}
+function preencherPersonalidade(){
+  const a = config.ajustes || {nome:"Giulia"};
+  $$("[data-campo]").forEach(i => i.value = a[i.dataset.campo] || "");
+  $$("[data-opcao]").forEach(g => g.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", (a[g.dataset.opcao] || "") === b.dataset.v)));
+  $("#edPers").value = config.personalidade;
+  marcarSuja(false);
+}
+function marcarSuja(v){ persSuja = v; $("#pendente").hidden = !v; if (v) $("#statusPers").textContent = ""; atualizarPreviaPrompt(); }
+function atualizarPreviaPrompt(){
+  if (!$("#detPrompt").open) return;
+  const pers = persSuja ? $("#edPers").value : config.personalidade;
+  const aj = persSuja ? lerFormAjustes() : config.ajustes;
+  $("#prePrompt").textContent = personalidadeFinal(pers, aj) + "\n\n---\n\n# BASE DE CONHECIMENTO\n\n" + config.base + "\n\n" + blocoAprendizados();
+}
+
+$("#detPrompt").addEventListener("toggle", atualizarPreviaPrompt);
+$$("[data-campo], #edPers").forEach(i => i.addEventListener("input", () => marcarSuja(true)));
+$$("[data-opcao]").forEach(g => g.querySelectorAll("button").forEach(b => b.onclick = () => {
+  g.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); marcarSuja(true);
+}));
+
+async function salvarTextos(campos){
+  config = {...config, ...campos};
+  salvarLocalStorage();
+  return "Salvo.";
+}
+
+async function salvarPersonalidade(){
+  const msg = await salvarTextos({personalidade:$("#edPers").value.trim() || PADRAO.personalidade, ajustes:lerFormAjustes()});
+  marcarSuja(false); $("#statusPers").textContent = msg; return msg;
+}
+
+$("#btnSalvarPers").onclick = salvarPersonalidade;
+$("#btnSalvarTestar").onclick = async () => {
+  await salvarPersonalidade();
+  novaConversa(); irPara("conversa");
+  aviso("Nova conversa iniciada com as configurações salvas.");
+};
+
+let numCliquesPers = 0;
+$("#btnPersOriginal").onclick = (e) => {
+  numCliquesPers++;
+  if (numCliquesPers === 1) {
+    $("#btnPersOriginal").textContent = "Confirmar restauração?";
+    setTimeout(() => { numCliquesPers = 0; $("#btnPersOriginal").textContent = "Restaurar personalidade original"; }, 3000);
+  } else {
+    numCliquesPers = 0;
+    $("#btnPersOriginal").textContent = "Restaurar personalidade original";
+    $("#edPers").value = PADRAO.personalidade;
+    marcarSuja(true);
+  }
+};
+
+/* Reescrever Personalidade com IA */
+$("#btnIA").onclick = async () => {
+  const pedido = $("#iaPedido").value.trim();
+  if (controleIA){ controleIA.abort(); return; }
+  if (!pedido){ $("#statusIA2").textContent = "Escreva primeiro o que você quer mudar."; return; }
+  
+  const atual = personalidadeFinal($("#edPers").value, lerFormAjustes());
+  controleIA = new AbortController();
+  $("#btnIA").textContent = "Parar"; $("#statusIA2").textContent = "Escrevendo…";
+  $("#iaResultado").hidden = false; $("#iaProposta").value = "";
+  
+  const promptReescrita = [{
+    role: "user",
+    content: "Você escreve instruções de personalidade para assistentes virtuais de atendimento por WhatsApp.\n" +
+      "Abaixo está o texto atual da personalidade da assistente do Flávia Morais Estúdio de Fotografia e um pedido de alteração.\n" +
+      "Reescreva o TEXTO COMPLETO da personalidade incorporando o pedido. Regras:\n" +
+      "- Mantenha a estrutura em Markdown com títulos (#) e listas.\n" +
+      "- Incorpore a seção de AJUSTES ao corpo do texto.\n" +
+      "- Preserve as regras de segurança.\n" +
+      "- Responda só com o novo texto, sem comentários antes ou depois.\n\n" +
+      "TEXTO ATUAL:\n<<<\n" + atual + "\n>>>\n\nPEDIDO:\n<<<\n" + pedido + "\n>>>"
+  }];
+
+  try {
+    const text = await chamarGeminiServerless(promptReescrita, controleIA.signal);
+    $("#iaProposta").value = text.replace(/^```\w*\n?|```$/g, "").trim();
+    $("#statusIA2").textContent = "";
+  } catch(e) {
+    if (e.name !== 'AbortError') {
+      $("#statusIA2").textContent = "Erro ao reescrever personalidade.";
+      $("#iaResultado").hidden = true;
+    }
+  } finally { 
+    controleIA = null; 
+    $("#btnIA").textContent = "Reescrever personalidade"; 
+  }
+};
+
+$("#btnIADescartar").onclick = () => { $("#iaResultado").hidden = true; $("#iaProposta").value = ""; };
+$("#btnIAUsar").onclick = () => {
+  const t = $("#iaProposta").value.trim(); if (!t) return;
+  $("#edPers").value = t;
+  $$("[data-campo]").forEach(i => i.value = "");
+  $$("[data-opcao]").forEach(g => g.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === "")));
+  $("#iaResultado").hidden = true; $("#iaPedido").value = "";
+  $("#statusIA2").textContent = "Nova versão aplicada no texto completo. Salve para valer na conversa.";
+  marcarSuja(true);
+};
+
+/* Base */
+$("#btnSalvarBase").onclick = async () => {
+  $("#statusBase").textContent = await salvarTextos({base:$("#edBase").value.trim() || PADRAO.base});
+};
+
+let numCliquesBase = 0;
+$("#btnBaseOriginal").onclick = async () => {
+  numCliquesBase++;
+  if (numCliquesBase === 1) {
+    $("#btnBaseOriginal").textContent = "Confirmar restauração?";
+    setTimeout(() => { numCliquesBase = 0; $("#btnBaseOriginal").textContent = "Restaurar original"; }, 3000);
+  } else {
+    numCliquesBase = 0;
+    $("#btnBaseOriginal").textContent = "Restaurar original";
+    $("#edBase").value = PADRAO.base;
+    $("#statusBase").textContent = await salvarTextos({base:PADRAO.base});
+  }
+};
+
+/* Exportar */
+$$("[data-exportar]").forEach(b => b.onclick = () => {
+  const tipo = b.dataset.exportar;
+  const pers = tipo === "personalidade";
+  $("#expTitulo").textContent = pers ? "Texto final da personalidade" : "Aprendizados";
+  $("#expNota").textContent = pers
+    ? "Substitua todo o conteúdo do arquivo personalidade.md por este texto."
+    : "Cole no fim do arquivo base_conhecimento.md.";
+  $("#txtExport").value = pers ? personalidadeFinal() : (blocoAprendizados() || "Nenhum aprendizado ativo ainda.");
+  $("#txtExport").dataset.arquivo = pers ? "personalidade.md" : "aprendizados.md";
+  $("#dlgExport").showModal();
+});
+
+$("#btnFecharExp").onclick = () => $("#dlgExport").close();
+$("#btnCopiar").onclick = async () => {
+  try{ await navigator.clipboard.writeText($("#txtExport").value); $("#btnCopiar").textContent = "Copiado"; }
+  catch{ $("#txtExport").select(); $("#btnCopiar").textContent = "Selecionado: use Ctrl+C"; }
+  setTimeout(() => $("#btnCopiar").textContent = "Copiar", 2500);
+};
+
+$("#btnBaixar").onclick = () => {
+  const blob = new Blob([$("#txtExport").value], { type: "text/markdown;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = $("#txtExport").dataset.arquivo;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+/* Início */
+telaVazia(); 
+renderAprendizado(); 
+preencherPersonalidade(); 
+$("#edBase").value = config.base;
+irPara(location.hash.slice(1) || "conversa", {semHash:true});
+</script>
+</body>
+</html>
