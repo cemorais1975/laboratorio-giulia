@@ -19,30 +19,35 @@ export default async function handler(req, res) {
       parts: [{ text: msg.content }]
     }));
 
-    // Modelos para tentar em sequência caso um esteja congestionado
-    const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-    let lastErrorMessage = '';
+    // Lista de modelos válidos para tentar sequencialmente
+    const models = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro'];
+    let lastError = '';
 
     for (const model of models) {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents })
-      });
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents })
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
-        return res.status(200).json({ text: data.candidates[0].content.parts[0].text });
+        if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+          return res.status(200).json({ text: data.candidates[0].content.parts[0].text });
+        }
+
+        if (data.error?.message) {
+          lastError = `[${model}]: ${data.error.message}`;
+        }
+      } catch (err) {
+        lastError = err.message;
       }
-
-      lastErrorMessage = data.error?.message || 'Erro na resposta da API.';
-      console.warn(`Tentativa com ${model} falhou:`, lastErrorMessage);
     }
 
-    return res.status(503).json({ error: 'Servidores do Google temporariamente ocupados. Tente novamente em alguns instantes.' });
+    return res.status(500).json({ error: `Erro na API do Google: ${lastError}` });
 
   } catch (error) {
     return res.status(500).json({ error: 'Erro interno no servidor.' });
