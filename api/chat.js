@@ -19,22 +19,29 @@ export default async function handler(req, res) {
       parts: [{ text: msg.content }]
     }));
 
-    const model = 'gemini-3.8-flash';
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    // Payload otimizado para gerar respostas mais ágeis e gastar menos cota
+    const payload = {
+      contents,
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 600
+      }
+    };
 
-    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    const maxRetries = 3;
-    let lastErrorMessage = '';
+    const models = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    let lastError = '';
 
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    for (const model of models) {
       try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 7500);
+        const timeoutId = setTimeout(() => controller.abort(), 8500);
 
         const response = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents }),
+          body: JSON.stringify(payload),
           signal: controller.signal
         });
 
@@ -46,31 +53,16 @@ export default async function handler(req, res) {
           return res.status(200).json({ text: data.candidates[0].content.parts[0].text });
         }
 
-        lastErrorMessage = data.error?.message || 'Erro na comunicação com a API.';
-
-        // Se o servidor do Google disser que está em alta demanda ou temporariamente indisponível, tenta novamente
-        if (attempt < maxRetries && (response.status === 503 || response.status === 429 || lastErrorMessage.includes('demand'))) {
-          await sleep(1200);
-          continue;
+        if (data.error?.message) {
+          lastError = data.error.message;
         }
-
-        return res.status(response.status || 500).json({ error: lastErrorMessage });
-
       } catch (err) {
-        if (err.name === 'AbortError') {
-          lastErrorMessage = 'O Gemini demorou para responder.';
-        } else {
-          lastErrorMessage = err.message;
-        }
-
-        if (attempt < maxRetries) {
-          await sleep(1000);
-        }
+        lastError = err.name === 'AbortError' ? 'Tempo limite atingido' : err.message;
       }
     }
 
-    return res.status(503).json({ 
-      error: `Os servidores do Google estão temporariamente sobrecarregados. Por favor, tente enviar novamente em alguns segundos.` 
+    return res.status(503).json({
+      error: 'Os servidores gratuitos do Gemini estão temporariamente sobrecarregados. Aguarde 10 segundos e tente novamente.'
     });
 
   } catch (error) {
