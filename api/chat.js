@@ -19,38 +19,24 @@ export default async function handler(req, res) {
       parts: [{ text: msg.content }]
     }));
 
-    // Nomes oficiais e ativos na API Gemini v1beta
-    const models = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-2.5-flash'];
-    const errors = [];
+    // Modelo oficial atualizado exigido pelo Google
+    const model = 'gemini-3.8-flash';
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-    for (const model of models) {
-      try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents })
+    });
 
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents })
-        });
+    const data = await response.json();
 
-        const data = await response.json();
-
-        if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
-          return res.status(200).json({ text: data.candidates[0].content.parts[0].text });
-        }
-
-        if (data.error?.message) {
-          errors.push(`[${model}]: ${data.error.message}`);
-        } else {
-          errors.push(`[${model}]: Erro HTTP ${response.status}`);
-        }
-      } catch (err) {
-        errors.push(`[${model}]: ${err.message}`);
-      }
+    if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+      return res.status(200).json({ text: data.candidates[0].content.parts[0].text });
     }
 
-    return res.status(500).json({ 
-      error: `Falha na conexão com a API:\n${errors.join(' | ')}` 
+    return res.status(response.status || 500).json({ 
+      error: data.error?.message || 'Erro na comunicação com a API do Gemini.' 
     });
 
   } catch (error) {
