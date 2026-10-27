@@ -19,9 +19,9 @@ export default async function handler(req, res) {
       parts: [{ text: msg.content }]
     }));
 
-    // Lista com os identificadores oficiais e ativos da API Gemini v1beta
-    const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest'];
-    let lastError = '';
+    // Nomes oficiais e ativos na API Gemini v1beta
+    const models = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-2.5-flash'];
+    const errors = [];
 
     for (const model of models) {
       try {
@@ -40,14 +40,18 @@ export default async function handler(req, res) {
         }
 
         if (data.error?.message) {
-          lastError = `[${model}]: ${data.error.message}`;
+          errors.push(`[${model}]: ${data.error.message}`);
+        } else {
+          errors.push(`[${model}]: Erro HTTP ${response.status}`);
         }
       } catch (err) {
-        lastError = err.message;
+        errors.push(`[${model}]: ${err.message}`);
       }
     }
 
-    return res.status(500).json({ error: `Erro na API do Google: ${lastError}` });
+    return res.status(500).json({ 
+      error: `Falha na conexão com a API:\n${errors.join(' | ')}` 
+    });
 
   } catch (error) {
     return res.status(500).json({ error: 'Erro interno no servidor.' });
