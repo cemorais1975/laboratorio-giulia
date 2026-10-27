@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Laboratório da assistente · Flávia Morais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EAF1EF; --surface:#FFFFFF; --soft:#F4F8F7; --ink:#1E3A47; --muted:#587080;
+  --sun:#E9B43C; --sun-ink:#33260A; --me:#D5E9DD; --line:#CADAD5; --ok:#2F7A5B; --danger:#B4452F;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10212A; --surface:#182D37; --soft:#1D3540; --ink:#E4EDF0; --muted:#9BB1B9;
+    --sun:#E9B43C; --sun-ink:#2A1E02; --me:#21443B; --line:#2B4651; --ok:#7CC8A4; --danger:#E58B76;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10212A; --surface:#182D37; --soft:#1D3540; --ink:#E4EDF0; --muted:#9BB1B9;
+  --sun:#E9B43C; --sun-ink:#2A1E02; --me:#21443B; --line:#2B4651; --ok:#7CC8A4; --danger:#E58B76;
+  color-scheme:dark;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{
+  background:var(--bg);color:var(--ink);
+  font:16px/1.5 "Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  display:grid;grid-template-rows:auto 1fr;
+}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;border-radius:999px;border:1px solid var(--line);background:transparent;padding:7px 14px;font-size:.9rem}
+button:hover{border-color:var(--ink)}
+button:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:2px solid var(--sun);outline-offset:2px}
+.prim{background:var(--sun);color:var(--sun-ink);border-color:var(--sun);font-weight:700}
+.prim:hover{border-color:var(--sun);filter:brightness(1.04)}
+.link{border:none;padding:4px 6px;border-radius:6px;color:var(--muted);font-size:.82rem}
+.link:hover{color:var(--ink);background:var(--soft)}
+
+header{display:flex;align-items:center;gap:14px;padding:12px 20px;background:var(--surface);border-bottom:1px solid var(--line)}
+.sol{width:36px;height:36px;flex:none}
+.marca .nome{display:block;font:500 1.5rem/1 "Cormorant Garamond",Georgia,serif}
+.marca .sub{display:block;margin-top:3px;color:var(--muted);font-size:.84rem}
+.menu{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.menu button{border-color:transparent;display:inline-flex
